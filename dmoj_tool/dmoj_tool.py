@@ -1,18 +1,19 @@
 #!/usr/bin/env python
 import requests 
+from pathlib import Path
 from bs4 import BeautifulSoup, Tag
 import sys 
 import time
 from urllib.error import HTTPError
 
-def main(token,problem,language,path_to_code):
+def submit(token,problem,language,path_to_code):
     # print(problem,path_to_code)
     
     base_url = 'https://dmoj.ca'
     
     
     try:
-        code = open(path_to_code).read()
+        code = open(Path(path_to_code)).read()
     except Exception:
         raise 
     
@@ -40,6 +41,7 @@ def main(token,problem,language,path_to_code):
     
     submission = requests.post(submit_url,headers=headers,data={'problem':problem_id,'source':code,'language':languages[language.lower()]},allow_redirects=True)
     
+    #wew at least web uses forwardslash
     submission_num = submission.url.split('/')[-1]
     
     print('\nExecution Results:')
@@ -75,7 +77,8 @@ def main(token,problem,language,path_to_code):
 if __name__ == '__main__':
     if len(sys.argv)==1:
         # show the help
-        print("Helpful help message.")
+        print("helpful help message.")
+        pass
     else:
         # submit to problem
         try:
@@ -85,4 +88,4 @@ if __name__ == '__main__':
             open('../token','w+')
             sys.exit(1)
         
-        main(f.read(),sys.argv[1],sys.argv[2],sys.argv[3])
+        submit(f.read(),sys.argv[1],sys.argv[2],sys.argv[3])

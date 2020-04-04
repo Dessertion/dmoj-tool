@@ -1,0 +1,28 @@
+#!/usr/bin/env python
+from dmoj_tool import dmoj_tool
+import sys
+
+if __name__ == '__main__':
+    if len(sys.argv)==1:
+        # show the help
+        print("Helpful help message.")
+    else:
+        if sys.argv[1]=='configure' or '-c' in sys.argv:
+            if len(sys.argv)==2:
+                print('Usage: dmoj-tool configure [your token]')
+                sys.exit(0)
+            f = open('./token','w+')
+            f.write(sys.argv[2])
+            f.close()
+            print('Token set.')
+            
+        elif sys.argv[1]=='submit':
+            # submit to problem
+            try:
+                f = open('./token','r+')
+            except FileNotFoundError:
+                print("Token file does not exist! Please ensure that your token is configured with `configure` or `-c`")
+                open('./token','w+')
+                sys.exit(1)
+            
+            dmoj_tool.main(f.read(),sys.argv[2],sys.argv[3],sys.argv[4])

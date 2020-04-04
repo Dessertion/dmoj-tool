@@ -1,0 +1,9 @@
+token
+Pipfile
+Pipfile.lock
+test.py
+
+.vscode/
+build/
+dist/
+*.egg-info/

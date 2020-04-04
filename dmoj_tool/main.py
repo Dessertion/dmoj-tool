@@ -11,10 +11,11 @@ def main(problem,language,path_to_code):
     base_url = 'https://dmoj.ca'
     
     try:
-        f = open('./token')
+        f = open('../token','r+')
     except FileNotFoundError:
         print("Token file does not exist! Please ensure that your token is in a file called 'token'.")
-        sys.exit()
+        open('../token','w+')
+        sys.exit(1)
     
     try:
         code = open(path_to_code).read()
@@ -51,11 +52,11 @@ def main(problem,language,path_to_code):
     submission_num = submission.url.split('/')[-1]
     
     print('\nExecution Results:')
+    
     while True:
         submission = requests.get(f'{base_url}/widgets/single_submission?id={submission_num}',headers=headers)
         
         soup1 = BeautifulSoup(submission.text,'html.parser')
-        
         
         if soup1.find(class_='status').text != 'G':
             testcases = requests.get(f'{base_url}/widgets/submission_testcases?id={submission_num}',headers=headers)

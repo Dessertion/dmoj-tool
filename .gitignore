@@ -1,7 +1,8 @@
 token
 Pipfile
 Pipfile.lock
-test.py
+
+test.*
 
 .vscode/
 build/
